@@ -14,7 +14,7 @@ interface provides ``zope.app.content.interfaces.IContentType``.
     >>> import zope.interface
     >>> import zope.app.content.interfaces
 
-    >>> class IFoo(object): pass
+    >>> class IFoo(zope.interface.Interface): pass
     >>> zope.interface.alsoProvides(IFoo,
     ...                             zope.app.content.interfaces.IContentType)
 
@@ -86,3 +86,37 @@ implementation and our standard adapters.
 
     >>> adapted.possible
     [<DemoFolderishDescriptor ...>]
+
+Subtyping Engine
+----------------
+
+Everything discussed above was the default implementation that the
+``p4a.subtyper.engine.Subtyper`` utility uses.  All top-level integration
+points interface with this utility to get it's information so components
+can be overridden on granular or less-granular levels.
+
+First we go ahead and register the default engine utility.
+
+    >>> from p4a.subtyper import engine
+    >>> zope.component.provideUtility(engine.Subtyper())
+
+Now we can query the engine as we need information.
+
+    >>> subtyper = zope.component.getUtility(interfaces.ISubtyper)
+
+    >>> folder = SimpleFolder()
+    >>> subtyper.existing_type(folder) is None
+    True
+
+    >>> subtyper.change_type(folder, IFoo)
+    >>> subtyper.existing_type(folder)
+    <InterfaceClass ...IFoo>
+
+    >>> subtyper.remove_type(folder)
+    >>> subtyper.existing_type(folder) is None
+    True
+
+    >>> subtyper.remove_type(folder)
+    Traceback (most recent call last):
+        ...
+    NoSubtypeDefined
