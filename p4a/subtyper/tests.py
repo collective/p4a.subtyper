@@ -5,8 +5,6 @@ from zope.component import testing
 def test_suite():
     flags = doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS
     return unittest.TestSuite((
-        doctest.DocTestSuite('p4a.subtyper.utils',
-                             optionflags=flags),
         doctest.DocFileSuite('subtyping.txt',
                              setUp=testing.setUp,
                              tearDown=testing.tearDown,
