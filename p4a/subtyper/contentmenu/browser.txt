@@ -1,0 +1,19 @@
+Subtyping From a Browser
+========================
+
+Subtypes of content should be configurable from the browser.
+
+Set Up
+------
+
+Begin by setting up our Manager user.
+
+    >>> uf = app.acl_users
+    >>> uf._doAddUser('admin', 'admin', ['Manager'], [])
+
+And of course we get the test browser.
+
+    >>> import Products.Five.testbrowser
+    >>> browser = Products.Five.testbrowser.Browser()
+    >>> browser.addHeader('Authorization', 'Basic admin:admin')
+

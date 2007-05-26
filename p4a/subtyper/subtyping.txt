@@ -120,3 +120,9 @@ Now we can query the engine as we need information.
     Traceback (most recent call last):
         ...
     NoSubtypeDefined
+
+    >>> [x for x in subtyper.possible_types(folder)]
+    [<InterfaceClass ...IFoo>]
+
+    >>> [x for x in subtyper.possible_descriptors(folder)]
+    [<DemoFolderishDescriptor ...>]

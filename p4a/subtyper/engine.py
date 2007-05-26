@@ -1,4 +1,5 @@
 import zope.interface
+import zope.component
 import zope.app.content.interfaces
 from p4a.subtyper import interfaces
 
@@ -28,7 +29,7 @@ class Subtyper(object):
         return (x.type_interface for x in self.possible_descriptors(obj))
 
     def possible_descriptors(self, obj):
-        possible = interfaces.IPossibleTypes(obj)
+        possible = interfaces.IPossibleDescriptors(obj)
         return possible.possible
 
     def _remove_type(self, obj):
@@ -64,3 +65,11 @@ class Subtyper(object):
                 type_ = x
                 break
         return type_
+
+    def descriptor_for_type(self, type_):
+        all = zope.component.getAllUtilitiesRegisteredFor \
+              (interfaces.IPortalTypedDescriptor)
+        for x in all:
+            if x.type_interface == type_:
+                return x
+        return None

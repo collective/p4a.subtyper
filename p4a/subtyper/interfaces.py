@@ -70,6 +70,10 @@ class ISubtyper(zope.interface.Interface):
         """Remove any sub type on the object.
         """
 
+    def existing_type(obj):
+        """Return the existing type of an object.
+        """
+
 class ISubtypeEvent(zope.interface.Interface):
     object = zope.interface.Attribute('The subject of the event')
     subtype = zope.schema.InterfaceField(title=u'Type Interface')
