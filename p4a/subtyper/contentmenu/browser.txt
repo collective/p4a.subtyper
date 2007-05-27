@@ -6,7 +6,14 @@ Subtypes of content should be configurable from the browser.
 Set Up
 ------
 
-Begin by setting up our Manager user.
+First, setup some simple testing stuff.
+
+    >>> from p4a.subtyper.contentmenu import testing
+    >>> import zope.component
+    >>> zope.component.provideUtility(testing.DemoDescriptor(),
+    ...                               name=u'demodescriptor')
+
+Setup our Manager user.
 
     >>> uf = app.acl_users
     >>> uf._doAddUser('admin', 'admin', ['Manager'], [])
@@ -16,4 +23,3 @@ And of course we get the test browser.
     >>> import Products.Five.testbrowser
     >>> browser = Products.Five.testbrowser.Browser()
     >>> browser.addHeader('Authorization', 'Basic admin:admin')
-

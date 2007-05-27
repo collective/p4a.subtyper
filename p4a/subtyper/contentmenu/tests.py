@@ -3,6 +3,10 @@ from zope.testing import doctest
 from Testing.ZopeTestCase import FunctionalDocFileSuite
 import Products.PloneTestCase.layer
 
+from Products.PloneTestCase import PloneTestCase
+PloneTestCase.installProduct('Plone4ArtistsSubtyper')
+PloneTestCase.setupPloneSite()
+
 def test_suite():
     flags = doctest.NORMALIZE_WHITESPACE|doctest.ELLIPSIS
     fsuite = unittest.TestSuite((
