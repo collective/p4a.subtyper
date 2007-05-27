@@ -26,9 +26,9 @@ def folderish_possible_descriptors(context):
     if portal_type is None:
         return PossibleDescriptors()
 
-    possible = zope.component.getAllUtilitiesRegisteredFor \
+    possible = zope.component.getUtilitiesFor \
                (interfaces.IPortalTypedFolderishDescriptor)
-    return PossibleDescriptors([c for c in possible
+    return PossibleDescriptors([(n, c) for n, c in possible
                                 if c.for_portal_type == portal_type],
                                'folderish')
 
@@ -39,13 +39,13 @@ def nonfolderish_possible_descriptors(context):
     if portal_type is None:
         return PossibleDescriptors()
 
-    all = zope.component.getAllUtilitiesRegisteredFor \
+    all = zope.component.getUtilitiesFor \
           (interfaces.IPortalTypedDescriptor)
-    folderish = zope.component.getAllUtilitiesRegisteredFor \
+    folderish = zope.component.getUtilitiesFor \
           (interfaces.IPortalTypedFolderishDescriptor)
 
-    all = set([c for c in all if c.for_portal_type == portal_type])
-    folderish = set([c for c in folderish
+    all = set([(n, c) for n, c in all if c.for_portal_type == portal_type])
+    folderish = set([(n, c) for n, cc in folderish
                      if c.for_portal_type == portal_type])
 
     return PossibleDescriptors(list(all.difference(folderish)),

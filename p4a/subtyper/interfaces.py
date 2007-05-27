@@ -51,15 +51,10 @@ class ISubtyper(zope.interface.Interface):
 
     def possible_types(obj):
         """All possible types for a given object.  Will return an iterable
-        of interfaces that provide IContentType.
-        """
-
-    def possible_descriptors(obj):
-        """All possible descriptors for a given object.  Will return an iterable
         of objects implementing IContentTypeDescriptor.
         """
 
-    def change_type(obj, type_):
+    def change_type(obj, descriptor_name):
         """Will change the sub type of the given object to the specified
         type.  If no sub type was already set on the object, the target type
         will be added.  If a sub type already exists, it will be removed
@@ -85,3 +80,11 @@ class ISubtypeAddedEvent(ISubtypeEvent):
 class ISubtypeRemovedEvent(ISubtypeEvent):
     """Fired when a subtype was removed from an object.
     """
+
+class IDescriptorWithName(zope.interface.Interface):
+    """A simple way to match a descriptor with it's registered name.
+    """
+
+    name = zope.schema.TextLine(title=u'Name')
+    descriptor = zope.schema.Object(title=u'Descriptor',
+                                    schema=IContentTypeDescriptor)

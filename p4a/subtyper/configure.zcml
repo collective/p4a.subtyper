@@ -1,0 +1,33 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser">
+
+  <include package=".contentmenu" />
+
+  <utility factory=".engine.Subtyper" />
+  <adapter factory=".default.nonfolderish_possible_descriptors" />
+  <adapter factory=".default.folderish_possible_descriptors" />
+
+  <browser:menu
+      id="subtypes"
+      title="Sub-types"
+      class=".menu.SubtypesMenu"
+      />
+
+  <browser:subMenuItem
+      menu="contentmenu_extra"
+      submenu="subtypes"
+      title="Sub-types"
+      permission="zope.Public"
+      for="*"
+      />
+
+  <browser:page
+      name="subtyper"
+      for="*"
+      permission="zope.Public"
+      class=".browser.SubtyperView"
+      allowed_interface=".browser.ISubtyperView"
+      />
+
+</configure>

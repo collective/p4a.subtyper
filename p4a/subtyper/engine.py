@@ -1,6 +1,8 @@
+from persistent.dict import PersistentDict
 import zope.interface
 import zope.component
 import zope.app.content.interfaces
+import zope.app.annotation.interfaces
 from p4a.subtyper import interfaces
 
 class SubtypeEvent(object):
@@ -19,57 +21,102 @@ class SubtypeRemovedEvent(SubtypeEvent):
     __doc__ = interfaces.ISubtypeRemovedEvent
     zope.interface.implements(interfaces.ISubtypeRemovedEvent)
 
-class NoSubtypeDefined(Exception): pass
+class SubtypeError(Exception): pass
+class NoSubtypeDefined(SubtypeError): pass
+class ExistingSubtypeDefined(SubtypeError): pass
+
+class DescriptorWithName(object):
+    zope.interface.implements(interfaces.IDescriptorWithName)
+
+    def __init__(self, name, descriptor):
+        self.name = name
+        self.descriptor = descriptor
+
+    def __str__(self):
+        return '<DescriptorWithName name=%s; descriptor=%s>' % \
+               (self.name, str(self.descriptor))
+    __repr__ = __str__
+
+class _DescriptorInfo(object):
+    ANNO_KEY = 'p4a.subtyper.DescriptorInfo'
+
+    def __init__(self, context):
+        self.context = context
+        self.anno = zope.app.annotation.interfaces.IAnnotations(context, None)
+
+    def _ensure_info(self):
+        if self.anno is None:
+            zope.app.annotation.interfaces.IAnnotations(self.context)
+        d = self.anno.get(self.ANNO_KEY, None)
+        if d is None:
+            d = PersistentDict()
+            self.anno[self.ANNO_KEY] = d
+        return d
+
+    def _set_name(self, v):
+        info = self._ensure_info()
+        info['descriptor_name'] = v
+    def _get_name(self):
+        if self.anno is None:
+            return None
+        d = self.anno.get(self.ANNO_KEY, None)
+        if d is None:
+            return None
+        return d.get('descriptor_name', None)
+    name = property(_get_name, _set_name)
 
 class Subtyper(object):
     __doc__ = interfaces.ISubtyper.__doc__
     zope.interface.implements(interfaces.ISubtyper)
 
     def possible_types(self, obj):
-        return (x.type_interface for x in self.possible_descriptors(obj))
-
-    def possible_descriptors(self, obj):
         possible = interfaces.IPossibleDescriptors(obj)
-        return possible.possible
+        return (DescriptorWithName(n, c) for n, c in possible.possible)
 
     def _remove_type(self, obj):
-        type_ = self.existing_type(obj)
+        info = _DescriptorInfo(obj)
+        name = info.name
+        descriptor = None
 
-        if type_ is not None:
-            directlyProvides = zope.interface.directlyProvides
-            directlyProvidedBy = zope.interface.directlyProvidedBy
-            directlyProvides(obj, directlyProvidedBy(obj) - type_)
+        if name is not None:
+            info.name = None
+            descriptor = zope.component.queryUtility( \
+                interfaces.IContentTypeDescriptor, name=name)
+            if descriptor is not None:
+                directlyProvides = zope.interface.directlyProvides
+                directlyProvidedBy = zope.interface.directlyProvidedBy
+                directlyProvides(obj, directlyProvidedBy(obj) - \
+                                      descriptor.type_interface)
 
-        return type_
+        return descriptor
 
     def remove_type(self, obj):
-        type_ = self._remove_type(obj)
-        if type_ is None:
+        descriptor = self._remove_type(obj)
+        if descriptor is None:
             raise NoSubtypeDefined()
-        zope.event.notify(SubtypeRemovedEvent(obj, type_))
+        zope.event.notify(SubtypeRemovedEvent(obj, descriptor))
 
-    def _add_type(self, obj, type_):
-        zope.interface.alsoProvides(obj, (type_,))
+    def _add_type(self, obj, descriptor_name):
+        info = _DescriptorInfo(obj)
+        if info.name is not None:
+            raise ExistingSubtypeDefined(str(info.name)) 
+        descriptor = zope.component.getUtility( \
+            interfaces.IContentTypeDescriptor, name=descriptor_name)
+        info.name = descriptor_name
+        zope.interface.alsoProvides(obj, (descriptor.type_interface,))
+        return descriptor
 
-    def change_type(self, obj, type_):
+    def change_type(self, obj, descriptor_name):
         removed = self._remove_type(obj)
         zope.event.notify(SubtypeRemovedEvent(obj, removed))
 
-        self._add_type(obj, type_)
-        zope.event.notify(SubtypeRemovedEvent(obj, type_))
+        added = self._add_type(obj, descriptor_name)
+        zope.event.notify(SubtypeRemovedEvent(obj, added))
 
-    def existing_type(self, obj):
-        type_ = None
-        for x in zope.interface.directlyProvidedBy(obj):
-            if zope.app.content.interfaces.IContentType.providedBy(x):
-                type_ = x
-                break
-        return type_
-
-    def descriptor_for_type(self, type_):
-        all = zope.component.getAllUtilitiesRegisteredFor \
-              (interfaces.IPortalTypedDescriptor)
-        for x in all:
-            if x.type_interface == type_:
-                return x
+    def existing_type(self, obj): 
+        info = _DescriptorInfo(obj)
+        if info.name != None:
+            c = zope.component.queryUtility( \
+                interfaces.IContentTypeDescriptor, name=info.name)
+            return DescriptorWithName(info.name, c)
         return None
