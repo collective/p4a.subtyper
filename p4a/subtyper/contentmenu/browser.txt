@@ -1,7 +1,9 @@
-Subtyping From a Browser
-========================
+Defining Content Menu Sub Menu's
+================================
 
-Subtypes of content should be configurable from the browser.
+Registering new menu's for the ``contentmenu_extra`` should make them show
+up in the content menu bar.  Classic zope3 style menu's and menu items are
+supported.
 
 Set Up
 ------
