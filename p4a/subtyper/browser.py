@@ -6,8 +6,8 @@ from p4a.subtyper import utils
 import Products.Five.browser
 
 class ISubtyperView(zope.interface.Interface):
-    def possible_descriptors(): pass 
-    def has_possible_descriptors(): pass
+    def possible_types(): pass 
+    def has_possible_types(): pass
     def change_type(): pass
 
 class SubtyperView(Products.Five.browser.BrowserView):
@@ -17,12 +17,12 @@ class SubtyperView(Products.Five.browser.BrowserView):
 
     zope.interface.implements(ISubtyperView)
 
-    def possible_descriptors(self):
+    def possible_types(self):
         subtyper = zope.component.getUtility(interfaces.ISubtyper)
-        return subtyper.possible_descriptors(self.context)
+        return subtyper.possible_types(self.context)
 
-    def has_possible_descriptors(self):
-        return len(self.possible_descriptors()) > 0
+    def has_possible_types(self):
+        return len(self.possible_types()) > 0
 
     def _redirect(self, msg):
         url = self.context.absolute_url()
