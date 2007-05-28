@@ -18,7 +18,7 @@ class SubtypesMenu(BrowserMenu):
         existing = subtyper.existing_type(object)
 
         result = []
-        for subtype in subtyper.possible_descriptors(object):
+        for subtype in subtyper.possible_types(object):
             d = {'title': subtype.title,
                  'description': subtype.description or u'',
                  'action': '%s/@@subtyper/change_type?descriptor=%s' % \
