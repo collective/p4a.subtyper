@@ -128,12 +128,16 @@ Now we go ahead and set the type and confirm the type was set.
     >>> subtyper.change_type(folder, u'demofolder')
     >>> subtyper.existing_type(folder)
     <DescriptorWithName name=demofolder; descriptor=<DemoFolderishDescriptor ...>>
+    >>> interfaces.ISubtyped.providedBy(folder)
+    True
 
 Removing a type should mean the existing check returns None.
 
     >>> subtyper.remove_type(folder)
     >>> subtyper.existing_type(folder) is None
     True
+    >>> interfaces.ISubtyped.providedBy(folder)
+    False
 
 And trying to remove a type when there's been no type set will raise
 an exception.
