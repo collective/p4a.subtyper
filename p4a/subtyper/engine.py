@@ -99,7 +99,7 @@ class Subtyper(object):
     def _add_type(self, obj, descriptor_name):
         info = _DescriptorInfo(obj)
         if info.name is not None:
-            raise ExistingSubtypeDefined(str(info.name)) 
+            raise ExistingSubtypeDefined(str(info.name))
         descriptor = zope.component.getUtility( \
             interfaces.IContentTypeDescriptor, name=descriptor_name)
         info.name = descriptor_name
@@ -113,10 +113,14 @@ class Subtyper(object):
         added = self._add_type(obj, descriptor_name)
         zope.event.notify(SubtypeRemovedEvent(obj, added))
 
-    def existing_type(self, obj): 
+    def existing_type(self, obj):
         info = _DescriptorInfo(obj)
         if info.name != None:
             c = zope.component.queryUtility( \
                 interfaces.IContentTypeDescriptor, name=info.name)
             return DescriptorWithName(info.name, c)
         return None
+
+    def get_named_type(self, name):
+        return zope.component.getUtility(interfaces.IContentTypeDescriptor,
+                                         name=name)

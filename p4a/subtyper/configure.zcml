@@ -2,6 +2,8 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser">
 
+  <include package="zope.app.annotation" />
+
   <include package=".contentmenu" />
 
   <utility factory=".engine.Subtyper" />

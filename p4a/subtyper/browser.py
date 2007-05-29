@@ -36,11 +36,11 @@ class SubtyperView(Products.Five.browser.BrowserView):
 
         subtyper = zope.component.getUtility(interfaces.ISubtyper)
 
-        descriptor_name = self.request.get('descriptor', None)
-        if descriptor_name:
-            descriptor = utils.name_to_class(descriptor_name)()
-            msg = 'Changed subtype to %s' % descriptor.title
-            subtyper.change_type(self.context, descriptor.type_interface)
+        subtype_name = self.request.get('subtype', None)
+        if subtype_name:
+            subtype = subtyper.get_named_type(subtype_name)
+            subtyper.change_type(self.context, subtype_name)
+            msg = 'Changed subtype to %s' % subtype.title
         else:
             msg = 'No subtype specified'
 

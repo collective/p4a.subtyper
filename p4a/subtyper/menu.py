@@ -24,12 +24,13 @@ class SubtypesMenu(BrowserMenu):
         for subtype in subtyper.possible_types(object):
             descriptor = subtype.descriptor
 
+            selected = existing is not None and subtype.name == existing.name
+
             d = {'title': descriptor.title,
                  'description': descriptor.description or u'',
-                 'action': '%s/@@subtyper/change_type?descriptor=%s' % \
-                     (object.absolute_url(),
-                      utils.dotted_name(descriptor.__class__)),
-                 'selected': descriptor.type_interface == existing,
+                 'action': '%s/@@subtyper/change_type?subtype=%s' % \
+                     (object.absolute_url(), subtype.name),
+                 'selected': selected,
                  'icon': '',
                  'extra': None,
                  'submenu': None,

@@ -69,6 +69,10 @@ class ISubtyper(zope.interface.Interface):
         """Return the existing type of an object.
         """
 
+    def get_named_type(name):
+        """Return descriptor represented by name.
+        """
+
 class ISubtypeEvent(zope.interface.Interface):
     object = zope.interface.Attribute('The subject of the event')
     subtype = zope.schema.InterfaceField(title=u'Type Interface')
