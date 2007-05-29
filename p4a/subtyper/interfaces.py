@@ -1,5 +1,10 @@
 import zope.interface
 
+class ISubtyped(zope.interface.Interface):
+    """An object that has been subtyped with this machinery should provide
+    this interface.
+    """
+
 class IContentTypeDescriptor(zope.interface.Interface):
     """A descriptor representing information about a content type.
     """

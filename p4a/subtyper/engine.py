@@ -85,8 +85,10 @@ class Subtyper(object):
             if descriptor is not None:
                 directlyProvides = zope.interface.directlyProvides
                 directlyProvidedBy = zope.interface.directlyProvidedBy
-                directlyProvides(obj, directlyProvidedBy(obj) - \
-                                      descriptor.type_interface)
+                should_have = directlyProvidedBy(obj) - \
+                              descriptor.type_interface -\
+                              interfaces.ISubtyped
+                directlyProvides(obj, should_have)
 
         return descriptor
 
@@ -103,7 +105,8 @@ class Subtyper(object):
         descriptor = zope.component.getUtility( \
             interfaces.IContentTypeDescriptor, name=descriptor_name)
         info.name = descriptor_name
-        zope.interface.alsoProvides(obj, (descriptor.type_interface,))
+        zope.interface.alsoProvides(obj, (interfaces.ISubtyped,
+                                          descriptor.type_interface,))
         return descriptor
 
     def change_type(self, obj, descriptor_name):
