@@ -32,7 +32,7 @@ def folderish_possible_descriptors(context):
                                 if c.for_portal_type == portal_type],
                                'folderish')
 
-@zope.component.adapter(Products.Archetypes.interfaces.IBaseContent)
+@zope.component.adapter(zope.interface.Interface)
 @zope.interface.implementer(interfaces.IPossibleDescriptors)
 def nonfolderish_possible_descriptors(context):
     portal_type = getattr(Acquisition.aq_inner(context), 'portal_type', None)
