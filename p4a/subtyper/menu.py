@@ -35,7 +35,8 @@ class SubtypesMenu(BrowserMenu):
                      (object.absolute_url(), subtype.name),
                  'selected': selected,
                  'icon': '',
-                 'extra': None,
+                 'extra': {'id': descriptor.type_interface.__name__,
+                           'separator': None},
                  'submenu': None,
                  'subtype': subtype }
             result.append(d)
