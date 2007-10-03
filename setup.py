@@ -1,14 +1,12 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.1'
+version = '1.0b1'
 
 setup(name='p4a.subtyper',
       version=version,
-      description="Provides ability to subtype content",
-      long_description="""\
-""",
-      # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
+      description="Subtyping framework for Plone",
+      long_description=open("README.txt").read(),
       classifiers=[
         "Framework :: Zope2",
         "Framework :: Zope3",
