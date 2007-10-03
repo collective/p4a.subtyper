@@ -1,8 +1,18 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
-    xmlns:browser="http://namespaces.zope.org/browser">
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    i18n_domain="p4a.subtyper">
 
-  <include package="zope.app.annotation" />
+  <!-- Plone 2.5 support -->
+  <configure zcml:condition="installed zope.app.annotation.tests">
+    <include package="zope.app.annotation" />
+  </configure>
+
+  <!-- Plone 3.0+ support -->
+  <configure zcml:condition="installed zope.annotation">
+    <include package="zope.annotation" />
+  </configure>
 
   <include package=".contentmenu" />
 

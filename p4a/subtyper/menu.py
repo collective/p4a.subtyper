@@ -3,7 +3,10 @@ import zope.component
 import zope.interface
 from zope.app.publisher.interfaces.browser import IBrowserMenu
 from zope.app.publisher.browser.menu import BrowserMenu
-from zope.app.component.interface import interfaceToName
+try:
+    from zope.component.interface import interfaceToName
+except ImportError, err:
+    from zope.app.component.interface import interfaceToName
 from p4a.subtyper import interfaces
 from p4a.subtyper import utils
 

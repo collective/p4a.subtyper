@@ -2,7 +2,10 @@ from persistent.dict import PersistentDict
 import zope.interface
 import zope.component
 import zope.app.content.interfaces
-import zope.app.annotation.interfaces
+try:
+    from zope.annotation import interfaces as annoifaces
+except ImportError, err:
+    from zope.app.annotation import interfaces as annoifaces
 from p4a.subtyper import interfaces
 
 class SubtypeEvent(object):
@@ -42,11 +45,11 @@ class _DescriptorInfo(object):
 
     def __init__(self, context):
         self.context = context
-        self.anno = zope.app.annotation.interfaces.IAnnotations(context, None)
+        self.anno = annoifaces.IAnnotations(context, None)
 
     def _ensure_info(self):
         if self.anno is None:
-            zope.app.annotation.interfaces.IAnnotations(self.context)
+            annoifaces.IAnnotations(self.context)
         d = self.anno.get(self.ANNO_KEY, None)
         if d is None:
             d = PersistentDict()
