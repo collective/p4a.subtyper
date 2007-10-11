@@ -1,9 +1,14 @@
 p4a.subtyper
 ============
 
-p4a.subtyper is a subtyping framework for Plone.  It allows the developer
-to easily setup sub-content-types for any given content type.  It also exposes
-the possible sub-types for a given object in the content menu.
+p4a.subtyper is a subtyping framework for Plone.  In this context, subtyping
+means to provide additional specific types onto existing content types.  An
+example to standard Plone would be to have only one File content type (and no
+Image content type).  The Image content type would then become a sub-type
+of the File content type.
+
+It also exposes the possible sub-types for a given object in the content menu
+with a sub-types dropdown menu.
 
 See ``browser/browser.txt`` for example usage.
 
