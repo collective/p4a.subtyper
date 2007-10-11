@@ -3,10 +3,14 @@ import sys, os
 
 version = '1.0b1'
 
+readme = open('README.txt')
+long_description = readme.read()
+readme.close()
+
 setup(name='p4a.subtyper',
       version=version,
       description="Subtyping framework for Plone",
-      long_description=open("README.txt").read(),
+      long_description=long_description,
       classifiers=[
         "Framework :: Zope2",
         "Framework :: Zope3",
@@ -16,7 +20,7 @@ setup(name='p4a.subtyper',
       keywords='',
       author='Rocky Burt',
       author_email='rocky@serverzen.com',
-      url='',
+      url='http://www.plone4artists.org/svn/projects/p4a.subtyper/',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['p4a'],
