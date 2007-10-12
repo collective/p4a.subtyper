@@ -117,7 +117,7 @@ class Subtyper(object):
         zope.event.notify(SubtypeRemovedEvent(obj, removed))
 
         added = self._add_type(obj, descriptor_name)
-        zope.event.notify(SubtypeRemovedEvent(obj, added))
+        zope.event.notify(SubtypeAddedEvent(obj, added))
 
     def existing_type(self, obj):
         info = _DescriptorInfo(obj)
