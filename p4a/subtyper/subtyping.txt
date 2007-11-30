@@ -146,3 +146,17 @@ an exception.
     Traceback (most recent call last):
         ...
     NoSubtypeDefined
+
+Subtype Activation Descriptor
+-----------------------------
+
+There is a descriptor defined which makes it easier to query whether or
+not an object has a particular subtype.
+
+    >>> from p4a.subtyper import activated
+    >>> class AnotherFolder(SimpleFolder):
+    ...     foo_activated = activated('foo1')
+
+    >>> folder = AnotherFolder()
+    >>> folder.foo_activated
+    False

@@ -45,9 +45,14 @@ class SubtyperView(Products.Five.browser.BrowserView):
 
         subtype_name = self.request.get('subtype', None)
         if subtype_name:
+            existing = subtyper.existing_type(self.context)
             subtype = subtyper.get_named_type(subtype_name)
-            subtyper.change_type(self.context, subtype_name)
-            msg = 'Changed subtype to %s' % subtype.title
+            if existing is not None and existing.name == subtype_name:
+                subtyper.remove_type(self.context)
+                msg = 'Removed %s subtype' % subtype.title
+            else:
+                subtyper.change_type(self.context, subtype_name)
+                msg = 'Changed subtype to %s' % subtype.title
         else:
             msg = 'No subtype specified'
 
