@@ -1,12 +1,13 @@
-import urllib
+from Acquisition import aq_base
 import zope.interface
 import zope.component
 from p4a.subtyper import interfaces
 from p4a.subtyper import utils
 import Products.Five.browser
+from Products.statusmessages.interfaces import IStatusMessage
 
 class ISubtyperView(zope.interface.Interface):
-    def possible_types(): pass 
+    def possible_types(): pass
     def has_possible_types(): pass
     def change_type(): pass
 
@@ -26,8 +27,14 @@ class SubtyperView(Products.Five.browser.BrowserView):
 
     def _redirect(self, msg):
         url = self.context.absolute_url()
-        self.request.response.redirect(url + '?portal_status_message=' + \
-                                       urllib.quote(msg))
+        if hasattr(aq_base(self.context), 'getLayout'):
+            layout = self.context.getLayout() or ''
+            if layout:
+                if not url.endswith('/'):
+                    url += '/'
+                url += layout
+        IStatusMessage(self.request).addStatusMessage(msg)
+        self.request.response.redirect(url)
         return ''
 
     def change_type(self):
