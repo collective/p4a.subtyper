@@ -25,9 +25,9 @@ setup(name='p4a.subtyper',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['p4a'],
       include_package_data=True,
-      zip_safe=True,
+      zip_safe=False,
       install_requires=[
-          # -*- Extra requirements: -*-
+          'setuptools',
       ],
       entry_points="""
       # -*- Entry points: -*-
