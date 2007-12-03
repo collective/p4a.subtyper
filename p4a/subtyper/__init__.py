@@ -13,13 +13,16 @@ class activated(property):
     def get_obj(self, obj):
         if not self.attr:
             return obj
-        return getattr(obj, self.attr)
+        return getattr(obj, self.attr, None)
 
     def __get__(self, obj, type=None):
         subtyper = component.queryUtility(ISubtyper)
         if subtyper is None:
             return False
         realobj = self.get_obj(obj)
+        if realobj is None:
+            return False
+
         descwithname = subtyper.existing_type(realobj)
         if descwithname is None:
             return False
