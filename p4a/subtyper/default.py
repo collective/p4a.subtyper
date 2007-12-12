@@ -45,7 +45,7 @@ def nonfolderish_possible_descriptors(context):
           (interfaces.IPortalTypedFolderishDescriptor)
 
     all = set([(n, c) for n, c in all if c.for_portal_type == portal_type])
-    folderish = set([(n, c) for n, cc in folderish
+    folderish = set([(n, c) for n, c in folderish
                      if c.for_portal_type == portal_type])
 
     return PossibleDescriptors(list(all.difference(folderish)),
