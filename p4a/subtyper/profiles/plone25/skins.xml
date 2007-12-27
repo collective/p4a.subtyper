@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<object name="portal_skins">
+ <object name="p4a_subtyper" meta_type="Filesystem Directory View"
+    directory="Plone4ArtistsSubtyper/pythonlib/p4a/subtyper/skins/p4a_subtyper"/>
+ <skin-path name="Plone Default">
+  <layer name="p4a_subtyper" insert-before="plone_templates"/>
+ </skin-path>
+ <skin-path name="Plone Tableless">
+  <layer name="p4a_subtyper" insert-before="plone_templates"/>
+ </skin-path>
+</object>

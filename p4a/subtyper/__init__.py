@@ -1,6 +1,19 @@
 from zope import component
 from p4a.subtyper.interfaces import ISubtyper
 
+from Products.CMFCore import DirectoryView
+DirectoryView.registerDirectory('skins', globals())
+
+from Products.GenericSetup import EXTENSION
+from Products.GenericSetup import profile_registry
+profile_registry.registerProfile('p4a.subtyper',
+                                 'p4a.subtyper for Plone 2.5',
+                                 'Profile for p4a.subtyper in Plone 2.5',
+                                 'profiles/plone25',
+                                 'p4a.subtyper',
+                                 EXTENSION)
+
+
 class activated(property):
     """A descriptor for setting or getting whether a subtype
     has been applied to an object.
