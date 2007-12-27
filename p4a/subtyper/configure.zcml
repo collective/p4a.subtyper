@@ -2,6 +2,7 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:zcml="http://namespaces.zope.org/zcml"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     i18n_domain="p4a.subtyper">
 
   <browser:menu
@@ -21,6 +22,15 @@
         permission="zope.Public"
         for="*"
         />
+
+    <genericsetup:registerProfile
+        name="p4a.subtyper"
+        title="Plone4Artists Subtyper"
+        directory="profiles/plone25"
+        description="p4a.subtyper extension profile for Plone 2.5"
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        />
+
   </configure>
 
   <!-- Plone 3.0+ support -->
