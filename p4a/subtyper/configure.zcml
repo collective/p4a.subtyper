@@ -15,20 +15,13 @@
   <configure zcml:condition="installed zope.app.annotation.tests">
     <include package="zope.app.annotation" />
     <include package=".contentmenu" />
+    <include package=".contentmenu" file="meta.zcml" />
     <browser:subMenuItem
         menu="contentmenu_extra"
         submenu="subtypes"
         title="Sub-types"
         permission="zope.Public"
         for="*"
-        />
-
-    <genericsetup:registerProfile
-        name="p4a.subtyper"
-        title="Plone4Artists Subtyper"
-        directory="profiles/plone25"
-        description="p4a.subtyper extension profile for Plone 2.5"
-        provides="Products.GenericSetup.interfaces.EXTENSION"
         />
 
   </configure>
