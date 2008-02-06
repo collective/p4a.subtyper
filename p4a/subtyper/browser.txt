@@ -19,7 +19,7 @@ in the builtin module).
 
     >>> import p4a.subtyper.tests
     >>> import zope.interface
-    >>> import zope.app.content.interfaces
+    >>> import zope.app.content.interfaces    
 
     >>> class IFoo(zope.interface.Interface): pass
     >>> zope.interface.alsoProvides(IFoo,
@@ -55,6 +55,7 @@ And of course we get the test browser.
 
     >>> import Products.Five.testbrowser
     >>> browser = Products.Five.testbrowser.Browser()
+    >>> browser.handleErrors = False
     >>> browser.addHeader('Authorization', 'Basic admin:admin')
 
 Accessing Menu's
@@ -64,8 +65,16 @@ We should be able to simply go to the root of the plone site and see the
 newly registered content menu's.
 
     >>> portal = app.plone
-    >>> browser.open(portal.absolute_url())
+    
+Run the setup script
 
+    >>> from p4a.subtyper.sitesetup import setup_site
+    >>> setup_site(portal)
+    
+We gotta clear the skin cache after the setup:
+
+    >>> portal.clearCurrentSkin()
+    
 Setup a simple document.  But first we have to ensure that a document
 can have an ``IAnnotations`` adapter.
 
@@ -74,6 +83,7 @@ can have an ``IAnnotations`` adapter.
     >>> zope.interface.classImplements(document.ATDocument,
     ...                                IAttributeAnnotatable)
 
+    >>> browser.open(portal.absolute_url())
     >>> browser.getLink('Page').click()
     >>> browser.getControl('Title').value = 'testdoc'
     >>> browser.getControl('Body Text').value = 'test body'

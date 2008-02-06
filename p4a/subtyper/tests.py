@@ -5,7 +5,6 @@ from Testing.ZopeTestCase import FunctionalDocFileSuite
 import Products.PloneTestCase.layer
 
 from Products.PloneTestCase import PloneTestCase
-PloneTestCase.installProduct('Plone4ArtistsSubtyper')
 PloneTestCase.setupPloneSite()
 
 def test_suite():
