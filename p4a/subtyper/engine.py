@@ -1,7 +1,5 @@
 from persistent.dict import PersistentDict
 import zope.interface
-import zope.component
-import zope.app.content.interfaces
 try:
     from zope.annotation import interfaces as annoifaces
 except ImportError, err:
