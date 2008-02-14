@@ -111,7 +111,7 @@ is active. (This test is a bit tricky, because in Plone 3 it's a bullet put
 in with &bull; while in Plone 2.5 it's a css class.
 
     >>> link = browser.getLink('Foo1')
-    >>> '\xe2\x80\xa2 Foo1 Bar1' in link.text or link.attrs['class'] == 'actionMenuSelected'
+    >>> '\xe2\x80\xa2' in link.text or link.attrs.get('class') == 'actionMenuSelected'
     True
 
 OK, now enable subtype 2:
@@ -127,5 +127,5 @@ Make sure it's reflected that Foo2 is the newly used subtype.
     True
 
     >>> link = browser.getLink('Foo2')
-    >>> '\xe2\x80\xa2 Foo1 Bar1' in link.text or link.attrs['class'] == 'actionMenuSelected'
+    >>> '\xe2\x80\xa2' in link.text or link.attrs.get('class') == 'actionMenuSelected'
     True    
