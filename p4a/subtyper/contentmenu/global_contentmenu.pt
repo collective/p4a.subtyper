@@ -470,14 +470,11 @@
         <ul>
           <li tal:repeat="item submenu/submenu">
             <a href="#" 
-               tal:condition="not:item/selected"
                tal:content="item/title"
                tal:attributes="href item/action;
-                               title item/description"></a>
-            <span class="actionMenuSelected"
-                  tal:condition="item/selected"
-                  tal:content="item/title">
-            </span>
+                               title item/description;
+                               class python:item['selected'] and 
+                                            'actionMenuSelected' or '';" />
           </li>
         </ul>
       </dd>

@@ -92,7 +92,7 @@ can have an ``IAnnotations`` adapter.
 Make sure the actual subtypes menu dropdown is displayed on the new document.
 
     >>> browser.getLink('Sub-types')
-    <Link text='Sub-types \xe2\x96\xbc' url=...>
+    <Link text='Sub-types...>
 
 And now we make sure the menu item's are there.
 
@@ -107,11 +107,12 @@ And of course clicking that link should change the sub type.
     True
 
 This ensures that the Foo1 link now has a bullet in front of it, as it now
-is active.
+is active. (This test is a bit tricky, because in Plone 3 it's a bullet put 
+in with &bull; while in Plone 2.5 it's a css class.
 
     >>> link = browser.getLink('Foo1')
-    >>> link
-    <Link text='\xe2\x80\xa2 Foo1 Bar1' url='.../@@subtyper/change_type?subtype=foo1'>
+    >>> '\xe2\x80\xa2 Foo1 Bar1' in link.text or link.attrs['class'] == 'actionMenuSelected'
+    True
 
 OK, now enable subtype 2:
 
@@ -125,5 +126,6 @@ Make sure it's reflected that Foo2 is the newly used subtype.
     >>> 'Changed subtype to Foo2 Bar2' in browser.contents
     True
 
-    >>> browser.getLink('Foo2')
-    <Link text='\xe2\x80\xa2 Foo2 Bar2' url='.../@@subtyper/change_type?subtype=foo2'>
+    >>> link = browser.getLink('Foo2')
+    >>> '\xe2\x80\xa2 Foo1 Bar1' in link.text or link.attrs['class'] == 'actionMenuSelected'
+    True    
