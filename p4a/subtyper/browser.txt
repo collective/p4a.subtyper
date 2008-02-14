@@ -10,7 +10,7 @@ Setup our Manager user.
 
     >>> uf = app.acl_users
     >>> uf._doAddUser('admin', 'admin', ['Manager'], [])
-
+        
 First we go about setting up a ``IContentType`` based interface that our
 content will ultimately get marked up with.  This is used with the descriptor.
 The reason we need to assign our IFoo interface to a module is so that
@@ -92,7 +92,7 @@ can have an ``IAnnotations`` adapter.
 Make sure the actual subtypes menu dropdown is displayed on the new document.
 
     >>> browser.getLink('Sub-types')
-    <Link text='Sub-types' url=...>
+    <Link text='Sub-types \xe2\x96\xbc' url=...>
 
 And now we make sure the menu item's are there.
 
@@ -106,17 +106,14 @@ And of course clicking that link should change the sub type.
     >>> 'Changed subtype to Foo1 Bar1' in browser.contents
     True
 
-This ensures that the Foo1 link is no longer clickable since it is the active
-type now.
+This ensures that the Foo1 link now has a bullet in front of it, as it now
+is active.
 
-    >>> '''<span class="actionMenuSelected">Foo1 Bar1</span>''' in browser.contents
-    True
-    >>> browser.getLink('Foo1')
-    Traceback (most recent call last):
-      ...
-    LinkNotFoundError
+    >>> link = browser.getLink('Foo1')
+    >>> link
+    <Link text='\xe2\x80\xa2 Foo1 Bar1' url='.../@@subtyper/change_type?subtype=foo1'>
 
-Change the subtype again.
+OK, now enable subtype 2:
 
     >>> link = browser.getLink('Foo2')
     >>> link
@@ -128,9 +125,5 @@ Make sure it's reflected that Foo2 is the newly used subtype.
     >>> 'Changed subtype to Foo2 Bar2' in browser.contents
     True
 
-    >>> '''<span class="actionMenuSelected">Foo2 Bar2</span>''' in browser.contents
-    True
     >>> browser.getLink('Foo2')
-    Traceback (most recent call last):
-      ...
-    LinkNotFoundError
+    <Link text='\xe2\x80\xa2 Foo2 Bar2' url='.../@@subtyper/change_type?subtype=foo2'>

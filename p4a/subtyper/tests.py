@@ -20,7 +20,8 @@ def test_suite():
     fsuite = unittest.TestSuite((
         FunctionalDocFileSuite('browser.txt',
                                package='p4a.subtyper',
-                               optionflags=flags),
+                               optionflags=flags,
+                               test_class=PloneTestCase.FunctionalTestCase),
         ))
     fsuite.layer = Products.PloneTestCase.layer.PloneSite
 
