@@ -13,7 +13,7 @@ Setup our Manager user.
     >>> uf = app.acl_users
     >>> uf._doAddUser('admin', 'admin', ['Manager'], [])
 
-Now we need to setup some new content menu's that should how up.
+Now we need to setup some new content menu's that should show up.
 
     >>> from Products.Five import zcml
     >>> zcml.load_string('''
