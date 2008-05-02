@@ -2,6 +2,16 @@
 p4a.subtyper Changes
 ====================
 
+p4a.subtyper 1.0.2 (unreleased)
+===============================
+
+Bugs
+----
+
+  * Unselecting a subtype after you have selected a default view that is
+    specific for the subtype caused an error.
+    (http://www.plone4artists.org/products/plone4artistscalendar/issues/65)
+
 p4a.subtyper 1.0.1 (2008-02-13)
 ===============================
 

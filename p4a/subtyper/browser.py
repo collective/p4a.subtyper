@@ -5,6 +5,7 @@ from p4a.subtyper import interfaces
 from p4a.subtyper import utils
 import Products.Five.browser
 from Products.statusmessages.interfaces import IStatusMessage
+from Products.CMFDynamicViewFTI.interfaces import IDynamicallyViewable
 
 class ISubtyperView(zope.interface.Interface):
     def possible_types(): pass
@@ -48,8 +49,20 @@ class SubtyperView(Products.Five.browser.BrowserView):
             existing = subtyper.existing_type(self.context)
             subtype = subtyper.get_named_type(subtype_name)
             if existing is not None and existing.name == subtype_name:
+                selected_layout = False
+                dynamic_view = IDynamicallyViewable(self.context, None)
+                if dynamic_view is not None:
+                    if self.context.getLayout() in dynamic_view.getAvailableViewMethods():
+                        selected_layout = True
                 subtyper.remove_type(self.context)
                 msg = 'Removed %s subtype' % subtype.title
+                # Check if the default view has disappeared:
+                if selected_layout:
+                    dynamic_view = IDynamicallyViewable(self.context, None)
+                    if dynamic_view is None or (self.context.getLayout() in 
+                       dynamic_view.getAvailableViewMethods()):
+                        if self.context.hasProperty('layout'):
+                            self.context.manage_delProperties(['layout'])
             else:
                 subtyper.change_type(self.context, subtype_name)
                 msg = 'Changed subtype to %s' % subtype.title
