@@ -34,7 +34,7 @@ class SubtyperView(Products.Five.browser.BrowserView):
                 if not url.endswith('/'):
                     url += '/'
                 url += layout
-        IStatusMessage(self.request).addStatusMessage(msg)
+        IStatusMessage(self.request).addStatusMessage(msg, type='info')
         self.request.response.redirect(url)
         return ''
 
