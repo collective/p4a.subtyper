@@ -34,7 +34,7 @@ class SubtypesMenu(BrowserMenu):
                  'action': '%s/@@subtyper/change_type?subtype=%s' % \
                      (object.absolute_url(), subtype.name),
                  'selected': selected,
-                 'icon': '',
+                 'icon': descriptor.icon or u'',
                  'extra': {'id': descriptor.type_interface.__name__,
                            'separator': None},
                  'submenu': None,
