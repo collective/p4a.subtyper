@@ -1,6 +1,13 @@
+.. -*-rst-*-
+
 ====================
 p4a.subtyper Changes
 ====================
+
+p4a.subtyper 1.1.1 (unreleased)
+===============================
+
+  * Plone4ArtistsSubtyper is no longer loaded in tests if it doesn't exist
 
 p4a.subtyper 1.1.0 (2008-07-07)
 ===============================
