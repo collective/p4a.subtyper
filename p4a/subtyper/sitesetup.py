@@ -1,7 +1,8 @@
 from p4a.common import site
-
+from p4a.z2utils import utils
 from Products.CMFCore import utils as cmfutils
 from Products.CMFCore import DirectoryView
+from p4a.subtyper import interfaces
 
 import logging
 logger = logging.getLogger('p4a.subtyper.sitesetup')
@@ -42,5 +43,11 @@ def setup_site(site):
                 skin_tool._getSelections()[skin_name] = paths
 
 
-def unsetup_portal(portal):
-    pass
+def unsetup_portal(portal, reindex=True):
+    if reindex:
+        portal.portal_catalog.manage_reindexIndex(('object_provides',))
+    # Then we can use the removal utility to unregister all of them:
+    count = utils.remove_marker_ifaces(portal, interfaces.ISubtyped)
+    logger.warn('Removed ISubtyped interface from %i objects for '
+                'cleanup' % count)
+    
