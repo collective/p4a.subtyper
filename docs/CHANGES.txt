@@ -8,6 +8,9 @@ p4a.subtyper 1.1.1 (unreleased)
 ===============================
 
   * Plone4ArtistsSubtyper is no longer loaded in tests if it doesn't exist
+  
+  * There is now an uninstall method that will remove the ISubtyped marker
+    interface from all objects.
 
 p4a.subtyper 1.1.0 (2008-07-07)
 ===============================

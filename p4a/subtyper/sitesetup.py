@@ -48,6 +48,9 @@ def unsetup_portal(portal, reinstall=False, reindex=True):
         # Do nothing.
         return
     if reindex:
+        # Setting marker interfaces doesn't reindex objects, so we need to
+        # reindex object_provides to make sure it's up to date. If called 
+        # from other products that already have done this pass reindex=False.
         portal.portal_catalog.manage_reindexIndex(('object_provides',))
     # Then we can use the removal utility to unregister all of them:
     count = utils.remove_marker_ifaces(portal, interfaces.ISubtyped)
