@@ -43,7 +43,10 @@ def setup_site(site):
                 skin_tool._getSelections()[skin_name] = paths
 
 
-def unsetup_portal(portal, reindex=True):
+def unsetup_portal(portal, reinstall=False, reindex=True):
+    if reinstall:
+        # Do nothing.
+        return
     if reindex:
         portal.portal_catalog.manage_reindexIndex(('object_provides',))
     # Then we can use the removal utility to unregister all of them:
