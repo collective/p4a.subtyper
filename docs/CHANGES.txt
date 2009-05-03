@@ -4,13 +4,19 @@
 p4a.subtyper Changes
 ====================
 
-p4a.subtyper 1.1.1 (unreleased)
+p4a.subtyper 1.1.1 (2009-05-03)
 ===============================
 
   * Plone4ArtistsSubtyper is no longer loaded in tests if it doesn't exist
   
   * There is now an uninstall method that will remove the ISubtyped marker
     interface from all objects.
+    
+  * The way IDynamicallyViewable is imported has changes, so that
+    p4a.subtyper can be used as a standalone egg.
+    
+  * Made Plone4ArtistsSubtyper setup optional.
+
 
 p4a.subtyper 1.1.0 (2008-07-07)
 ===============================
