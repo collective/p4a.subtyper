@@ -1,52 +1,45 @@
-.. -*-rst-*-
+Changelog
+=========
 
-====================
-p4a.subtyper Changes
-====================
+1.1.2 (Unreleased)
+------------------
 
-p4a.subtyper 1.1.2 (Unreleased)
-===============================
-
-p4a.subtyper 1.1.1 (2009-05-03)
-===============================
-
-  * Plone4ArtistsSubtyper is no longer loaded in tests if it doesn't exist
-  
-  * There is now an uninstall method that will remove the ISubtyped marker
-    interface from all objects.
-    
-  * The way IDynamicallyViewable is imported has changes, so that
-    p4a.subtyper can be used as a standalone egg.
-    
-  * Made Plone4ArtistsSubtyper setup optional.
+- Nothing changed yet
 
 
-p4a.subtyper 1.1.0 (2008-07-07)
-===============================
+1.1.1 (2009-05-03)
+------------------
 
-Features
---------
+- Plone4ArtistsSubtyper is no longer loaded in tests if it doesn't exist
 
-  * Icon support for subtypes.
+- There is now an uninstall method that will remove the ISubtyped marker
+  interface from all objects.
 
-Bugs
-----
+- The way IDynamicallyViewable is imported has changes, so that p4a.subtyper can
+  be used as a standalone egg.
 
-  * Unselecting a subtype after you have selected a default view that is
-    specific for the subtype caused an error.
-    (http://www.plone4artists.org/products/plone4artistscalendar/issues/65)
-    
-  * Fixed status message type: type was not passed in, resulted in UI problem.
+- Made Plone4ArtistsSubtyper setup optional.
 
-p4a.subtyper 1.0.1 (2008-02-13)
-===============================
 
-Bugs
-----
+1.1.0 (2008-07-07)
+------------------
 
-  * You couldn't unselect a subtype under Plone 2.5.
+- Icon support for subtypes
 
-p4a.subtyper 1.0 (2008-02-13)
-============================
+- Unselecting a subtype after you have selected a default view that is specific
+  for the subtype caused an error.
+  Fixes http://www.plone4artists.org/products/plone4artistscalendar/issues/65
 
-* First public release
+- Fixed status message type: type was not passed in, resulted in UI problem.
+
+
+1.0.1 (2008-02-13)
+------------------
+
+- You couldn't unselect a subtype under Plone 2.5.
+
+
+1.0 (2008-02-13)
+----------------
+
+- First public release
