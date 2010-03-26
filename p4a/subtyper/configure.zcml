@@ -30,10 +30,13 @@
   <configure zcml:condition="installed zope.annotation">
     <include package="zope.annotation" />
     <include package="plone.app.contentmenu" />
-    <adapter for="* *"
-             name="subtypes"
-             factory=".submenu.SubtypesSubMenuItem"
-             provides="plone.app.contentmenu.interfaces.IContentMenuItem" />
+    <genericsetup:registerProfile
+         name="default"
+         title="Plone4Artists Subtyper"
+         directory="profiles/default"
+         description="Adds support for content types to have subtypes."
+         provides="Products.GenericSetup.interfaces.EXTENSION"
+         />
   </configure>
 
   <utility factory=".engine.Subtyper" />

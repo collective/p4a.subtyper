@@ -1,5 +1,6 @@
 from p4a.common import site
 from p4a.z2utils import utils
+from Products.CMFCore.utils import getToolByName
 from Products.CMFCore import utils as cmfutils
 from Products.CMFCore import DirectoryView
 from p4a.subtyper import interfaces
@@ -23,6 +24,12 @@ def setup_site(site):
     # In 2.5, install the subtyper profile:
     mt = cmfutils.getToolByName(site, 'portal_migration')
     plone_version = mt.getInstanceVersion()
+    
+    # Register profile for Plone 3.
+    if plone_version[0] == '3':
+        quickinstaller_tool = getToolByName(site, 'portal_quickinstaller')
+        quickinstaller_tool.installProduct('p4a.subtyper')
+    
     if plone_version[0:3] == '2.5':
         # Setup only needed for Plone 3.0
         skin_tool = cmfutils.getToolByName(site, 'portal_skins')
@@ -56,4 +63,5 @@ def unsetup_portal(portal, reinstall=False, reindex=True):
     count = utils.remove_marker_ifaces(portal, interfaces.ISubtyped)
     logger.warn('Removed ISubtyped interface from %i objects for '
                 'cleanup' % count)
+
     
