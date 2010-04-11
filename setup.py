@@ -1,10 +1,18 @@
+import os
 from setuptools import setup, find_packages
+
+
+def read(*rnames):
+    return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
 version = '1.1.2'
 
-readme = open('README.txt')
-long_description = readme.read()
-readme.close()
+long_description = (
+    read('README.txt')
+    + '\n' +
+    read('CHANGES.txt')
+    )
+
 
 setup(name='p4a.subtyper',
       version=version,
@@ -19,7 +27,8 @@ setup(name='p4a.subtyper',
       keywords='',
       author='Rocky Burt',
       author_email='rocky@serverzen.com',
-      url='http://www.plone4artists.org/svn/projects/p4a.subtyper/',
+      #url='http://www.plone4artists.org/svn/projects/p4a.subtyper/',
+      url='https://svn.plone.org/svn/collective/p4a/p4a.subtyper/trunk',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['p4a'],
