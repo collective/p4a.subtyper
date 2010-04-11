@@ -2,6 +2,7 @@ from zope import interface
 from zope.app.publisher.browser.menu import BrowserSubMenuItem
 from plone.app.contentmenu.interfaces import IActionsSubMenuItem
 
+
 class SubtypesSubMenuItem(BrowserSubMenuItem):
     interface.implements(IActionsSubMenuItem)
 

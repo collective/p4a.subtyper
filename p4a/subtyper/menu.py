@@ -1,26 +1,30 @@
 import logging
-import zope.component
-import zope.interface
+
+from zope.component import getUtility
+from zope.interface import implements
 from zope.app.publisher.interfaces.browser import IBrowserMenu
 from zope.app.publisher.browser.menu import BrowserMenu
-try:
-    from zope.component.interface import interfaceToName
-except ImportError, err:
-    from zope.app.component.interface import interfaceToName
-from p4a.subtyper import interfaces
-from p4a.subtyper import utils
+
+from p4a.subtyper.interfaces import ISubtyper
+
+#try:
+#    from zope.component.interface import interfaceToName
+#except ImportError, err:
+#    from zope.app.component.interface import interfaceToName
+
 
 logger = logging.getLogger('p4a.subtyper.menu')
+
 
 class SubtypesMenu(BrowserMenu):
     """A menu with items representing all possible subtypes for the current
     context.
     """
 
-    zope.interface.implements(IBrowserMenu)
+    implements(IBrowserMenu)
 
-    def _get_menus(self, object, request): 
-        subtyper = zope.component.getUtility(interfaces.ISubtyper)
+    def _get_menus(self, object, request):
+        subtyper = getUtility(ISubtyper)
         existing = subtyper.existing_type(object)
 
         result = []
@@ -34,11 +38,11 @@ class SubtypesMenu(BrowserMenu):
                  'action': '%s/@@subtyper/change_type?subtype=%s' % \
                      (object.absolute_url(), subtype.name),
                  'selected': selected,
-                 'icon': getattr(descriptor,'icon',u''),
+                 'icon': getattr(descriptor, 'icon', u''),
                  'extra': {'id': descriptor.type_interface.__name__,
                            'separator': None},
                  'submenu': None,
-                 'subtype': subtype }
+                 'subtype': subtype}
             result.append(d)
 
         return result

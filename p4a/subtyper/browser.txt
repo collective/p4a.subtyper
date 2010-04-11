@@ -10,7 +10,7 @@ Setup our Manager user.
 
     >>> uf = app.acl_users
     >>> uf._doAddUser('admin', 'admin', ['Manager'], [])
-        
+
 First we go about setting up a ``IContentType`` based interface that our
 content will ultimately get marked up with.  This is used with the descriptor.
 The reason we need to assign our IFoo interface to a module is so that
@@ -65,16 +65,16 @@ We should be able to simply go to the root of the plone site and see the
 newly registered content menu's.
 
     >>> portal = app.plone
-    
+
 Run the setup script
 
     >>> from p4a.subtyper.sitesetup import setup_site
     >>> setup_site(portal)
-    
+
 We gotta clear the skin cache after the setup:
 
     >>> portal.clearCurrentSkin()
-    
+
 Setup a simple document.  But first we have to ensure that a document
 can have an ``IAnnotations`` adapter.
 
@@ -128,4 +128,4 @@ Make sure it's reflected that Foo2 is the newly used subtype.
 
     >>> link = browser.getLink('Foo2')
     >>> '\xe2\x80\xa2' in link.text or link.attrs.get('class') == 'actionMenuSelected'
-    True    
+    True

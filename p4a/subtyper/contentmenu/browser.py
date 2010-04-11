@@ -1,21 +1,24 @@
-import Products.Five.browser
+from Products.Five.browser import BrowserView
 import Globals
 import AccessControl.SecurityInfo
 
-class ContentMenuView(Products.Five.browser.BrowserView):
+
+class ContentMenuView(BrowserView):
     """A view for the content menu.
     """
 
     security = AccessControl.SecurityInfo.ClassSecurityInfo()
 
     security.declarePublic('macros')
+
     @property
     def macros(self):
         return self.index.macros
 
 Globals.InitializeClass(ContentMenuView)
 
-class TestView(Products.Five.browser.BrowserView):
+
+class TestView(BrowserView):
     """Simple replacement of the standard zope2 test function.
     """
 

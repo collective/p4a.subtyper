@@ -20,16 +20,17 @@ def setup_portal(portal):
     site.ensure_site(portal)
     setup_site(portal)
 
+
 def setup_site(site):
     # In 2.5, install the subtyper profile:
     mt = cmfutils.getToolByName(site, 'portal_migration')
     plone_version = mt.getInstanceVersion()
-    
+
     # Register profile for Plone 3.
     if plone_version[0] == '3':
         quickinstaller_tool = getToolByName(site, 'portal_quickinstaller')
         quickinstaller_tool.installProduct('p4a.subtyper')
-    
+
     if plone_version[0:3] == '2.5':
         # Setup only needed for Plone 3.0
         skin_tool = cmfutils.getToolByName(site, 'portal_skins')
@@ -56,12 +57,10 @@ def unsetup_portal(portal, reinstall=False, reindex=True):
         return
     if reindex:
         # Setting marker interfaces doesn't reindex objects, so we need to
-        # reindex object_provides to make sure it's up to date. If called 
+        # reindex object_provides to make sure it's up to date. If called
         # from other products that already have done this pass reindex=False.
-        portal.portal_catalog.manage_reindexIndex(('object_provides',))
+        portal.portal_catalog.manage_reindexIndex(('object_provides', ))
     # Then we can use the removal utility to unregister all of them:
     count = utils.remove_marker_ifaces(portal, interfaces.ISubtyped)
     logger.warn('Removed ISubtyped interface from %i objects for '
                 'cleanup' % count)
-
-    

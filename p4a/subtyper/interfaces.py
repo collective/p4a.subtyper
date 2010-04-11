@@ -1,56 +1,63 @@
-import zope.interface
+from zope.interface import Interface, Attribute
+from zope.schema import List, Object, Set, TextLine, Text, InterfaceField
 
-class ISubtyped(zope.interface.Interface):
+
+class ISubtyped(Interface):
     """An object that has been subtyped with this machinery should provide
     this interface.
     """
 
-class IContentTypeDescriptor(zope.interface.Interface):
+
+class IContentTypeDescriptor(Interface):
     """A descriptor representing information about a content type.
     """
 
-    title = zope.schema.TextLine(title=u'Title')
-    description = zope.schema.Text(title=u'Description')
-    type_interface = zope.schema.InterfaceField(title=u'Type Interface')
+    title = TextLine(title=u'Title')
+    description = Text(title=u'Description')
+    type_interface = InterfaceField(title=u'Type Interface')
+
 
 class IFolderishContentTypeDescriptor(IContentTypeDescriptor):
     """A descriptor which allows to describe what possible objects of
     what particular portal_type's can be added as child items.
     """
 
-    allowed_child_portal_types = zope.schema.Set( \
-        title=u'Allowed Child Portal Types'
-        )
+    allowed_child_portal_types = Set( \
+        title=u'Allowed Child Portal Types')
+
 
 class _IPortalTypedMixin(IContentTypeDescriptor):
     """A set of common fields to use for any descriptor which supports
     discrimination by portal_type.
     """
 
-    for_portal_type = zope.schema.TextLine(title=u'For Portal Type')
+    for_portal_type = TextLine(title=u'For Portal Type')
+
 
 class IPortalTypedDescriptor(IContentTypeDescriptor,
                              _IPortalTypedMixin):
     """A descriptor which can be discriminated by portal_type.
     """
 
+
 class IPortalTypedFolderishDescriptor(IFolderishContentTypeDescriptor,
                                       _IPortalTypedMixin):
     """A folderish descriptor which can be discriminated by portal_type.
     """
 
-class IPossibleDescriptors(zope.interface.Interface):
+
+class IPossibleDescriptors(Interface):
     """A method of getting the possible descriptors on a given context.
     Intended to be implemented by adapters.
     """
 
-    possible = zope.schema.List( \
+    possible = List( \
         title=u'Possible',
-        value_type=zope.schema.Object(title=u'Possible',
-                                      schema=IContentTypeDescriptor)
-        )
+        value_type=Object(title=u'Possible',
+                                      schema=IContentTypeDescriptor))
 
-class ISubtyper(zope.interface.Interface):
+
+class ISubtyper(Interface):
     """The actual subtyping engine.
     """
 
@@ -78,22 +85,25 @@ class ISubtyper(zope.interface.Interface):
         """Return descriptor represented by name.
         """
 
-class ISubtypeEvent(zope.interface.Interface):
-    object = zope.interface.Attribute('The subject of the event')
-    subtype = zope.schema.InterfaceField(title=u'Type Interface')
+
+class ISubtypeEvent(Interface):
+    object = Attribute('The subject of the event')
+    subtype = InterfaceField(title=u'Type Interface')
+
 
 class ISubtypeAddedEvent(ISubtypeEvent):
     """Fired when a subtype was added to an object.
     """
 
+
 class ISubtypeRemovedEvent(ISubtypeEvent):
     """Fired when a subtype was removed from an object.
     """
 
-class IDescriptorWithName(zope.interface.Interface):
+
+class IDescriptorWithName(Interface):
     """A simple way to match a descriptor with it's registered name.
     """
 
-    name = zope.schema.TextLine(title=u'Name')
-    descriptor = zope.schema.Object(title=u'Descriptor',
-                                    schema=IContentTypeDescriptor)
+    name = TextLine(title=u'Name')
+    descriptor = Object(title=u'Descriptor', schema=IContentTypeDescriptor)

@@ -1,26 +1,37 @@
 from Acquisition import aq_base
-import zope.interface
-import zope.component
-from p4a.subtyper import interfaces
-from p4a.subtyper import utils
-import Products.Five.browser
+from zope.interface import Interface
+from zope.interface import implements
+from zope.component import getUtility
+
+from Products.Five.browser import BrowserView
 from Products.statusmessages.interfaces import IStatusMessage
-from Products.CMFDynamicViewFTI import interfaces as IDynamicallyViewableInterface 
+from Products.CMFDynamicViewFTI import interfaces as IDynamicallyViewableInterface
 
-class ISubtyperView(zope.interface.Interface):
-    def possible_types(): pass
-    def has_possible_types(): pass
-    def change_type(): pass
+from p4a.subtyper import interfaces
+#from p4a.subtyper import utils
 
-class SubtyperView(Products.Five.browser.BrowserView):
+
+class ISubtyperView(Interface):
+
+    def possible_types():
+        pass
+
+    def has_possible_types():
+        pass
+
+    def change_type():
+        pass
+
+
+class SubtyperView(BrowserView):
     """View for introspecting and possibly changing subtype info for the
     current context.
     """
 
-    zope.interface.implements(ISubtyperView)
+    implements(ISubtyperView)
 
     def possible_types(self):
-        subtyper = zope.component.getUtility(interfaces.ISubtyper)
+        subtyper = getUtility(interfaces.ISubtyper)
         return subtyper.possible_types(self.context)
 
     def has_possible_types(self):
@@ -42,7 +53,7 @@ class SubtyperView(Products.Five.browser.BrowserView):
         """Change the sub type of the current context.
         """
 
-        subtyper = zope.component.getUtility(interfaces.ISubtyper)
+        subtyper = getUtility(interfaces.ISubtyper)
 
         subtype_name = self.request.get('subtype', None)
         if subtype_name:
@@ -59,7 +70,7 @@ class SubtyperView(Products.Five.browser.BrowserView):
                 # Check if the default view has disappeared:
                 if selected_layout:
                     dynamic_view = IDynamicallyViewableInterface.IDynamicallyViewable(self.context, None)
-                    if dynamic_view is None or (self.context.getLayout() in 
+                    if dynamic_view is None or (self.context.getLayout() in
                        dynamic_view.getAvailableViewMethods()):
                         if self.context.hasProperty('layout'):
                             self.context.manage_delProperties(['layout'])

@@ -4,6 +4,7 @@ from p4a.subtyper.interfaces import ISubtyper
 from Products.CMFCore import DirectoryView
 DirectoryView.registerDirectory('skins', globals())
 
+
 class activated(property):
     """A descriptor for setting or getting whether a subtype
     has been applied to an object.

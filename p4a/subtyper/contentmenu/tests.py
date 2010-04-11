@@ -23,7 +23,7 @@ def test_suite():
         import zope.app.annotation.tests
         fsuite.append(FunctionalDocFileSuite('browser.txt',
                                              package='p4a.subtyper.contentmenu',
-                                             optionflags=flags),)
+                                             optionflags=flags), )
         fsuite.layer = Products.PloneTestCase.layer.PloneSite
     except ImportError, err:
         # this is ok

@@ -1,11 +1,14 @@
-import Acquisition
-import zope.interface
-import zope.component
-from p4a.subtyper import interfaces
+from Acquisition import aq_inner
+from zope.interface import implements, implementer, Interface
+#import zope.component
+from zope.component import getUtilitiesFor, adapter
+
 import Products.Archetypes.interfaces
+from p4a.subtyper import interfaces
+
 
 class PossibleDescriptors(object):
-    zope.interface.implements(interfaces.IPossibleDescriptors)
+    implements(interfaces.IPossibleDescriptors)
 
     def __init__(self, possible=[], comment=None):
         self._possible = possible
@@ -19,30 +22,32 @@ class PossibleDescriptors(object):
         return '<PossibleDescriptors comment=%s>' % (self._comment or '')
     __repr__ = __str__
 
-@zope.component.adapter(Products.Archetypes.interfaces.IBaseFolder)
-@zope.interface.implementer(interfaces.IPossibleDescriptors)
+
+@adapter(Products.Archetypes.interfaces.IBaseFolder)
+@implementer(interfaces.IPossibleDescriptors)
 def folderish_possible_descriptors(context):
-    portal_type = getattr(Acquisition.aq_inner(context), 'portal_type', None)
+    portal_type = getattr(aq_inner(context), 'portal_type', None)
     if portal_type is None:
         return PossibleDescriptors()
 
-    possible = zope.component.getUtilitiesFor \
-               (interfaces.IPortalTypedFolderishDescriptor)
+    possible = getUtilitiesFor(\
+               interfaces.IPortalTypedFolderishDescriptor)
     return PossibleDescriptors([(n, c) for n, c in possible
                                 if c.for_portal_type == portal_type],
                                'folderish')
 
-@zope.component.adapter(zope.interface.Interface)
-@zope.interface.implementer(interfaces.IPossibleDescriptors)
+
+@adapter(Interface)
+@implementer(interfaces.IPossibleDescriptors)
 def nonfolderish_possible_descriptors(context):
-    portal_type = getattr(Acquisition.aq_inner(context), 'portal_type', None)
+    portal_type = getattr(aq_inner(context), 'portal_type', None)
     if portal_type is None:
         return PossibleDescriptors()
 
-    all = zope.component.getUtilitiesFor \
-          (interfaces.IPortalTypedDescriptor)
-    folderish = zope.component.getUtilitiesFor \
-          (interfaces.IPortalTypedFolderishDescriptor)
+    all = getUtilitiesFor(\
+          interfaces.IPortalTypedDescriptor)
+    folderish = getUtilitiesFor(\
+          interfaces.IPortalTypedFolderishDescriptor)
 
     all = set([(n, c) for n, c in all if c.for_portal_type == portal_type])
     folderish = set([(n, c) for n, c in folderish
