@@ -4,6 +4,8 @@ Changelog
 1.1.2 (Unreleased)
 ------------------
 
+- Add MANIFEST.in [WouterVH]
+
 - The subtypes adapter is now registered locally for Plone 3 so that
   it does not show up in Plone sites where it is not installed.
 
