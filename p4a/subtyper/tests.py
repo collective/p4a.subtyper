@@ -2,9 +2,16 @@ import unittest
 from zope.testing import doctest
 from zope.component import testing
 from Testing.ZopeTestCase import FunctionalDocFileSuite
-import Products.PloneTestCase.layer
-
 from Products.PloneTestCase import PloneTestCase
+from Products.PloneTestCase.layer import onsetup, PloneSite
+from Products.Five import zcml
+
+@onsetup
+def load_zcml():
+    import p4a.subtyper
+    zcml.load_config('configure.zcml', p4a.subtyper)
+
+load_zcml()
 PloneTestCase.setupPloneSite()
 
 def test_suite():
@@ -23,6 +30,6 @@ def test_suite():
                                optionflags=flags,
                                test_class=PloneTestCase.FunctionalTestCase),
         ))
-    fsuite.layer = Products.PloneTestCase.layer.PloneSite
+    fsuite.layer = PloneSite
 
     return unittest.TestSuite((unitsuite, fsuite))
