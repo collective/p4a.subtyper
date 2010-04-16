@@ -27,7 +27,7 @@ def setup_site(site):
     plone_version = mt.getInstanceVersion()
 
     # Register profile for Plone 3.
-    if plone_version[0] == '3':
+    if int(plone_version[0]) >= 3:
         quickinstaller_tool = getToolByName(site, 'portal_quickinstaller')
         quickinstaller_tool.installProduct('p4a.subtyper')
 

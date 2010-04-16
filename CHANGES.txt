@@ -6,8 +6,9 @@ Changelog
 
 - Add MANIFEST.in [WouterVH]
 
-- The subtypes adapter is now registered locally for Plone 3 so that
-  it does not show up in Plone sites where it is not installed.
+- The subtypes adapter is now registered locally for Plone 3 and greater so
+  that it does not show up in Plone sites where it is not installed.
+  [yomatters]
 
 
 1.1.1 (2009-05-03)
