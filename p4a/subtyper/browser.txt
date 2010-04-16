@@ -78,10 +78,13 @@ We gotta clear the skin cache after the setup:
 Setup a simple document.  But first we have to ensure that a document
 can have an ``IAnnotations`` adapter.
 
-    >>> from zope.app.annotation.interfaces import IAttributeAnnotatable
-    >>> from Products.ATContentTypes.content import document
-    >>> zope.interface.classImplements(document.ATDocument,
+    >>> try: # BBB Zope 2.9 / AT 1.4
+    ...     from zope.app.annotation.interfaces import IAttributeAnnotatable
+    ...     from Products.ATContentTypes.content import document
+    ...     zope.interface.classImplements(document.ATDocument,
     ...                                IAttributeAnnotatable)
+    ... except ImportError:
+    ...     pass
 
     >>> browser.open(portal.absolute_url())
     >>> browser.getLink('Page').click()
