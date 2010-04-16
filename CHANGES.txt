@@ -4,6 +4,13 @@ Changelog
 1.1.2 (Unreleased)
 ------------------
 
+- Make sure active subtypes get the proper class in the menu even with
+  plone.app.contentmenu 2.x
+  [davisagli]
+
+- Fixed test setup for when running using zc.recipe.testrunner.
+  [davisagli]
+
 - Add MANIFEST.in [WouterVH]
 
 - The subtypes adapter is now registered locally for Plone 3 and greater so

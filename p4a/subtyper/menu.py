@@ -40,7 +40,8 @@ class SubtypesMenu(BrowserMenu):
                  'selected': selected,
                  'icon': getattr(descriptor, 'icon', u''),
                  'extra': {'id': descriptor.type_interface.__name__,
-                           'separator': None},
+                           'separator': None,
+                           'class': selected and 'actionMenuSelected' or ''},
                  'submenu': None,
                  'subtype': subtype}
             result.append(d)
