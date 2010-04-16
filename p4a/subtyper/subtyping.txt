@@ -8,8 +8,13 @@ First a little set up.
 
     >>> import zope.interface
     >>> import zope.component
-    >>> import zope.app.annotation.attribute
-    >>> zope.component.provideAdapter(zope.app.annotation.attribute.AttributeAnnotations)
+    >>> try:
+    ...     from zope.annotation.interfaces import IAttributeAnnotatable
+    ...     from zope.annotation.attribute import AttributeAnnotations
+    ... except ImportError: # BBB Zope 2.9
+    ...     from zope.app.annotation.interfaces import IAttributeAnnotatable
+    ...     from zope.app.annotation.attribute import AttributeAnnotations
+    >>> zope.component.provideAdapter(AttributeAnnotations)
 
 Defining Subtypes
 -----------------
@@ -85,7 +90,7 @@ implementation and our standard adapters.
     >>> class SimpleFolder(object):
     ...     zope.interface.implements(Products.Archetypes.interfaces.IBaseFolder)
     ...     portal_type = 'Folder'
-    >>> zope.interface.classImplements(SimpleFolder, zope.app.annotation.interfaces.IAttributeAnnotatable)
+    >>> zope.interface.classImplements(SimpleFolder, IAttributeAnnotatable)
 
     >>> adapted = interfaces.IPossibleDescriptors(SimpleFolder())
     >>> adapted
