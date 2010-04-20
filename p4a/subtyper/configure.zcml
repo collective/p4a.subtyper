@@ -20,7 +20,7 @@
         menu="contentmenu_extra"
         submenu="subtypes"
         title="Sub-types"
-        permission="zope.Public"
+        permission="cmf.ManagePortal"
         for="*"
         />
 
@@ -46,7 +46,7 @@
   <browser:page
       name="subtyper"
       for="*"
-      permission="zope.Public"
+      permission="cmf.ManagePortal"
       class=".browser.SubtyperView"
       allowed_interface=".browser.ISubtyperView"
       />

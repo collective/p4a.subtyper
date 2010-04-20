@@ -4,6 +4,10 @@ Changelog
 1.1.2 (Unreleased)
 ------------------
 
+- The permissions in p4a/subtyper/configure.zcml are now changed 
+  from zope.Public to cmf.ManagePortal to prevent Anonymous subtyping
+  [tbesluau]
+
 - Make sure active subtypes get the proper class in the menu even with
   plone.app.contentmenu 2.x
   [davisagli]
