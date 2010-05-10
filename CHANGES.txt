@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.1.3 (unreleased)
+------------------
+
+- Avoid TypeError when checking the subtyper-view for has_possible_types, in the
+  case that no subtypes are available. [WouterVH]
+
+
 1.1.2 (2010-04-29)
 ------------------
 
