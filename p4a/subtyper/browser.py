@@ -35,7 +35,7 @@ class SubtyperView(BrowserView):
         return subtyper.possible_types(self.context)
 
     def has_possible_types(self):
-        types = [subtype for subtype in view.possible_types()]
+        types = [subtype for subtype in self.possible_types()]
         return len(types) > 0
 
     def _redirect(self, msg):
