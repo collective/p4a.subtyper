@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.1.3 (unreleased)
+1.1.3 (2010-05-11)
 ------------------
 
 - Show the subtype-submenu only if the object actually has subtypes and you have
