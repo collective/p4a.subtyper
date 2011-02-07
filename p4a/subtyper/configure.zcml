@@ -40,8 +40,11 @@
   </configure>
 
   <utility factory=".engine.Subtyper" />
-  <adapter factory=".default.nonfolderish_possible_descriptors" />
+
   <adapter factory=".default.folderish_possible_descriptors" />
+  <adapter factory=".default.nonfolderish_possible_descriptors" />
+  <adapter factory=".default.portal_typed_folderish_possible_descriptors" />
+  <adapter factory=".default.portal_typed_nonfolderish_possible_descriptors" />
 
   <browser:page
       name="subtyper"

@@ -57,6 +57,13 @@ class IPossibleDescriptors(Interface):
                                       schema=IContentTypeDescriptor))
 
 
+class IPortalTypedPossibleDescriptors(IPossibleDescriptors):
+    """A method of getting the possible descriptors on a given context,
+    for a given portal_type.
+    Intended to be implemented by adapters.
+    """
+
+
 class ISubtyper(Interface):
     """The actual subtyping engine.
     """
