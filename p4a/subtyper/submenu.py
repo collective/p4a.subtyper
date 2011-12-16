@@ -5,11 +5,12 @@ from zope import interface
 from zope.app.publisher.browser.menu import BrowserSubMenuItem
 from zope.component import getMultiAdapter
 
+from p4a.subtyper import subtyperMessageFactory as _
 
 class SubtypesSubMenuItem(BrowserSubMenuItem):
     interface.implements(IActionsSubMenuItem)
 
-    title = u'Sub-types'
+    title = _(u'Sub-types')
     description = u''
     submenuId = u'subtypes'
     order = 9

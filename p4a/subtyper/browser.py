@@ -9,7 +9,7 @@ from Products.CMFDynamicViewFTI import interfaces as IDynamicallyViewableInterfa
 
 from p4a.subtyper import interfaces
 #from p4a.subtyper import utils
-
+from p4a.subtyper import subtyperMessageFactory as _
 
 class ISubtyperView(Interface):
 
@@ -67,7 +67,7 @@ class SubtyperView(BrowserView):
                     if self.context.getLayout() in dynamic_view.getAvailableViewMethods():
                         selected_layout = True
                 subtyper.remove_type(self.context)
-                msg = 'Removed %s subtype' % subtype.title
+                msg = _(u'Removed ${title} subtype', mapping={'title': subtype.title})
                 # Check if the default view has disappeared:
                 if selected_layout:
                     dynamic_view = IDynamicallyViewableInterface.IDynamicallyViewable(self.context, None)
@@ -77,8 +77,8 @@ class SubtyperView(BrowserView):
                             self.context.manage_delProperties(['layout'])
             else:
                 subtyper.change_type(self.context, subtype_name)
-                msg = 'Changed subtype to %s' % subtype.title
+                msg = _(u'Changed subtype to ${title}', mapping={'title': subtype.title})
         else:
-            msg = 'No subtype specified'
+            msg = _(u'No subtype specified')
 
         return self._redirect(msg)

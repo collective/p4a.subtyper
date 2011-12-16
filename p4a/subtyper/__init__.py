@@ -3,7 +3,8 @@ from p4a.subtyper.interfaces import ISubtyper
 
 from Products.CMFCore import DirectoryView
 DirectoryView.registerDirectory('skins', globals())
-
+from zope.i18nmessageid import MessageFactory
+subtyperMessageFactory = MessageFactory('p4a.subtyper')
 
 class activated(property):
     """A descriptor for setting or getting whether a subtype
