@@ -1,10 +1,13 @@
 Changelog
 =========
 
-1.2.1 (unreleased)
+1.2.2 (unreleased)
 ------------------
 
-- no new changes
+1.2.1 (2012-02-10)
+------------------
+
+- Added permissions include for Plone 4.1 compat [calvinhp]
 
 1.2.0 (2011-02-07)
 ------------------
