@@ -42,6 +42,12 @@
          />
   </configure>
 
+  <!-- Plone 4.1+ support -->
+  <include package="Products.CMFCore" file="permissions.zcml"
+           xmlns:zcml="http://namespaces.zope.org/zcml"
+           zcml:condition="have plone-41" />
+
+
   <utility factory=".engine.Subtyper" />
 
   <adapter factory=".default.folderish_possible_descriptors" />
