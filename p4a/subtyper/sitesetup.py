@@ -4,7 +4,9 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFCore import utils as cmfutils
 from Products.CMFCore import DirectoryView
 from p4a.subtyper import interfaces
-
+from zope.interface import Interface
+from plone.app.contentmenu.interfaces import IContentMenuItem
+    
 import logging
 logger = logging.getLogger('p4a.subtyper.sitesetup')
 
@@ -16,11 +18,13 @@ except ImportError, err:
     HAS_FLSM = False
 
 
+# Unused:
 def setup_portal(portal):
     site.ensure_site(portal)
     setup_site(portal)
 
 
+# Unused:
 def setup_site(site):
     # In 2.5, install the subtyper profile:
     mt = cmfutils.getToolByName(site, 'portal_migration')
@@ -50,7 +54,7 @@ def setup_site(site):
                 paths = ','.join(paths)
                 skin_tool._getSelections()[skin_name] = paths
 
-
+# Used:
 def unsetup_portal(portal, reinstall=False, reindex=True):
     if reinstall:
         # Do nothing.
@@ -64,3 +68,8 @@ def unsetup_portal(portal, reinstall=False, reindex=True):
     count = utils.remove_marker_ifaces(portal, interfaces.ISubtyped)
     logger.warn('Removed ISubtyped interface from %i objects for '
                 'cleanup' % count)
+
+    sm = portal.getSiteManager()
+    if sm.adapters.lookup((Interface, Interface), IContentMenuItem, u'subtypes') is not None:
+        sm.unregisterAdapter(None, (Interface, Interface), IContentMenuItem, u'subtypes')
+

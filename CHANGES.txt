@@ -4,6 +4,12 @@ Changelog
 1.2.2 (unreleased)
 ------------------
 
+- To make the uninstall script run, I made p4a.subtyper a Zope product, so
+  it shows up in the control panel, which is necessary to find the Extensions
+  folder, which I added and put an uninstall script into. [regebro]
+  
+- Uninstall now also removes the persistent component. [regebro]
+
 1.2.1 (2012-02-10)
 ------------------
 

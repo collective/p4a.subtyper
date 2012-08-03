@@ -4,9 +4,13 @@
     xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:zcml="http://namespaces.zope.org/zcml"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:five="http://namespaces.zope.org/five"
     i18n_domain="p4a.subtyper">
 
   <i18n:registerTranslations directory="locales" />
+
+  <!-- If we dont' do this, we can't have uninstallers -->
+  <five:registerPackage package="." />
 
   <browser:menu
       id="subtypes"
