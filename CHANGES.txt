@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.2.2 (unreleased)
+1.2.2 (2012-08-04)
 ------------------
 
 - To make the uninstall script run, I made p4a.subtyper a Zope product, so
