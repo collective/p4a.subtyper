@@ -15,6 +15,9 @@ try:
     from zope.annotation import interfaces as annoifaces
 except ImportError, err:
     from zope.app.annotation import interfaces as annoifaces
+
+from Products.CMFCore.utils import getToolByName
+
 from p4a.subtyper import interfaces
 
 
@@ -124,6 +127,9 @@ class Subtyper(object):
         if descriptor is None:
             raise NoSubtypeDefined()
         notify(SubtypeRemovedEvent(obj, descriptor))
+        # We want to make sure the old interfaces are cleared from the catalog
+        portal_catalog = getToolByName(obj, 'portal_catalog')
+        portal_catalog.reindexObject(obj, ['object_provides'])
 
     def _add_type(self, obj, descriptor_name):
         info = _DescriptorInfo(obj)
@@ -142,6 +148,9 @@ class Subtyper(object):
 
         added = self._add_type(obj, descriptor_name)
         notify(SubtypeAddedEvent(obj, added))
+        # We want to make sure the new interfaces are present in the catalog
+        portal_catalog = getToolByName(obj, 'portal_catalog')
+        portal_catalog.reindexObject(obj, ['object_provides'])
 
     def existing_type(self, obj):
         info = _DescriptorInfo(obj)
