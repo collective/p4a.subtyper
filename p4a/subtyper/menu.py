@@ -2,8 +2,8 @@ import logging
 
 from zope.component import getUtility
 from zope.interface import implements
-from zope.app.publisher.interfaces.browser import IBrowserMenu
-from zope.app.publisher.browser.menu import BrowserMenu
+from zope.browsermenu.interfaces import IBrowserMenu
+from zope.browsermenu.menu import BrowserMenu
 
 from p4a.subtyper.interfaces import ISubtyper
 

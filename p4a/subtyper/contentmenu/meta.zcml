@@ -6,8 +6,8 @@
 
     <meta:directive
         name="subMenuItem"
-        schema="zope.app.publisher.browser.metadirectives.ISubMenuItemDirective"
-        handler="zope.app.publisher.browser.menumeta.subMenuItemDirective"
+        schema="zope.browsermenu.metadirectives.ISubMenuItemDirective"
+        handler="zope.browsermenu.metaconfigure.subMenuItemDirective"
         />
 
   </meta:directives>

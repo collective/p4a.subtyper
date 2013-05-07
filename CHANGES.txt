@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.3dev (unreleased)
+-------------------
+
+- Update import locations and make p4a.subtyper compatible with Plone 4.3.
+  [thet]
+
 1.2.3 (2012-12-10)
 ------------------
 

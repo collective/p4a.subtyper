@@ -2,7 +2,7 @@ from Products.CMFCore.utils import getToolByName
 from plone.app.contentmenu.interfaces import IActionsSubMenuItem
 
 from zope import interface
-from zope.app.publisher.browser.menu import BrowserSubMenuItem
+from zope.browsermenu.menu import BrowserSubMenuItem
 from zope.component import getMultiAdapter
 
 from p4a.subtyper import subtyperMessageFactory as _
