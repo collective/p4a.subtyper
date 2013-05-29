@@ -1,10 +1,12 @@
-from zope import component
-from p4a.subtyper.interfaces import ISubtyper
-
 from Products.CMFCore import DirectoryView
-DirectoryView.registerDirectory('skins', globals())
+from p4a.subtyper.interfaces import ISubtyper
+from zope import component
 from zope.i18nmessageid import MessageFactory
+import p4a.z2utils  # apply patches
+
 subtyperMessageFactory = MessageFactory('p4a.subtyper')
+DirectoryView.registerDirectory('skins', globals())
+
 
 class activated(property):
     """A descriptor for setting or getting whether a subtype
