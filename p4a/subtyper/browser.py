@@ -1,15 +1,13 @@
 from Acquisition import aq_base
-from zope.interface import Interface
-from zope.interface import implements
-from zope.component import getUtility
-
+from Products.CMFDynamicViewFTI import interfaces as interfaces_dynamic_view
 from Products.Five.browser import BrowserView
 from Products.statusmessages.interfaces import IStatusMessage
-from Products.CMFDynamicViewFTI import interfaces as IDynamicallyViewableInterface
-
 from p4a.subtyper import interfaces
-#from p4a.subtyper import utils
 from p4a.subtyper import subtyperMessageFactory as _
+from zope.component import getUtility
+from zope.interface import Interface
+from zope.interface import implements
+
 
 class ISubtyperView(Interface):
 
@@ -27,7 +25,6 @@ class SubtyperView(BrowserView):
     """View for introspecting and possibly changing subtype info for the
     current context.
     """
-
     implements(ISubtyperView)
 
     def possible_types(self):
@@ -62,22 +59,28 @@ class SubtyperView(BrowserView):
             subtype = subtyper.get_named_type(subtype_name)
             if existing is not None and existing.name == subtype_name:
                 selected_layout = False
-                dynamic_view = IDynamicallyViewableInterface.IDynamicallyViewable(self.context, None)
+                dynamic_view = interfaces_dynamic_view.IDynamicallyViewable(
+                        self.context, None)
                 if dynamic_view is not None:
-                    if self.context.getLayout() in dynamic_view.getAvailableViewMethods():
+                    if self.context.getLayout() in\
+                            dynamic_view.getAvailableViewMethods():
                         selected_layout = True
                 subtyper.remove_type(self.context)
-                msg = _(u'Removed ${title} subtype', mapping={'title': subtype.title})
+                msg = _(u'Removed ${title} subtype',
+                        mapping={'title': subtype.title})
                 # Check if the default view has disappeared:
                 if selected_layout:
-                    dynamic_view = IDynamicallyViewableInterface.IDynamicallyViewable(self.context, None)
+                    dynamic_view =\
+                        interfaces_dynamic_view.IDynamicallyViewable(
+                            self.context, None)
                     if dynamic_view is None or (self.context.getLayout() in
                        dynamic_view.getAvailableViewMethods()):
                         if self.context.hasProperty('layout'):
                             self.context.manage_delProperties(['layout'])
             else:
                 subtyper.change_type(self.context, subtype_name)
-                msg = _(u'Changed subtype to ${title}', mapping={'title': subtype.title})
+                msg = _(u'Changed subtype to ${title}',
+                        mapping={'title': subtype.title})
         else:
             msg = _(u'No subtype specified')
 
