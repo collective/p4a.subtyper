@@ -15,7 +15,8 @@ See ``browser/browser.txt`` for example usage.
 Requirements
 ------------
 
-  * Plone 2.5, Plone 3.x or Plone 4.x
+  * Version 1.2 is for Plone 2.5, Plone 3.x or Plone 4.0
+  * Version 2.0 is for Plone 4.1 and up
 
 Credits
 -------

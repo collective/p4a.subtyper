@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
-version = '1.3dev'
+version = '2.0'
 
 long_description = (
     read('README.txt')
@@ -27,7 +27,6 @@ setup(name='p4a.subtyper',
       keywords='',
       author='Rocky Burt',
       author_email='rocky@serverzen.com',
-      #url='http://www.plone4artists.org/svn/projects/p4a.subtyper/',
       url='https://svn.plone.org/svn/collective/p4a/p4a.subtyper/',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
