@@ -1,3 +1,4 @@
+dist/*
 *.pyc
 *.mo
 p4a.subtyper.egg-info/
